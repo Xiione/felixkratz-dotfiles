@@ -101,7 +101,28 @@ case "$1" in
 "Airmail")
   icon_result=":airmail:"
   ;;
-"Preview" | "预览" | "Skim" | "zathura")
+"CleanMyMac X")
+  icon_result=":desktop:"
+  ;;
+"Zotero")
+  icon_result=":zotero:"
+  ;;
+"Todoist")
+  icon_result=":todoist:"
+  ;;
+"LibreWolf")
+  icon_result=":libre_wolf:"
+  ;;
+"Grammarly Editor")
+  icon_result=":grammarly:"
+  ;;
+"OmniFocus")
+  icon_result=":omni_focus:"
+  ;;
+"Reminders")
+  icon_result=":reminders:"
+  ;;
+"Preview" | "Skim" | "zathura" | "sioyek" | "预览")
   icon_result=":pdf:"
   ;;
 "zoom.us")

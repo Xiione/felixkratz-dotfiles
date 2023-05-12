@@ -1,28 +1,28 @@
 #!/bin/bash
 
-update() {
-  source "$CONFIG_DIR/icons.sh"
-  INFO="$(/System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -I | awk -F ' SSID: '  '/ SSID: / {print $2}')"
-  LABEL="$INFO ($(ipconfig getifaddr en0))"
-  ICON="$([ -n "$INFO" ] && echo "$WIFI_CONNECTED" || echo "$WIFI_DISCONNECTED")"
+CURRENT_WIFI="$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I)"
+SSID="$(echo "$CURRENT_WIFI" | grep -o "SSID: .*" | sed 's/^SSID: //')"
+CURR_TX="$(echo "$CURRENT_WIFI" | grep -o "lastTxRate: .*" | sed 's/^lastTxRate: //')"
 
-  sketchybar --set $NAME icon="$ICON" label="$LABEL"
-}
+if [ "$SSID" = "" ]; then
+    sketchybar --set wifi_ssid label="None"
+    sketchybar --set wifi_txrate label="0 Mbps"
+else
+    sketchybar --set wifi_ssid label="$SSID"
+    sketchybar --set wifi_txrate label="${CURR_TX} Mbps"
+fi
 
-click() {
-  CURRENT_WIDTH="$(sketchybar --query $NAME | jq -r .label.width)"
-
-  WIDTH=0
-  if [ "$CURRENT_WIDTH" -eq "0" ]; then
-    WIDTH=dynamic
-  fi
-
-  sketchybar --animate sin 20 --set $NAME label.width="$WIDTH"
+popup() {
+  sketchybar --set "$NAME" popup.drawing="$1"
 }
 
 case "$SENDER" in
-  "wifi_change") update
+  "routine"|"forced") update
   ;;
-  "mouse.clicked") click
+  "mouse.entered") popup on
+  ;;
+  "mouse.exited"|"mouse.exited.global") popup off
+  ;;
+  "mouse.clicked") popup toggle
   ;;
 esac

@@ -8,11 +8,9 @@ zen_on() {
              --set separator drawing=off \
              --set front_app drawing=off \
              --set volume_icon drawing=off \
-             --set spotify.anchor drawing=off \
-             --set spotify.play updates=off \
-             --set brew drawing=off \
-             --set volume drawing=off \
-             --set github.bell drawing=off
+             --set wifi_alias drawing=off \
+             --set battery_alias drawing=off \
+             --set brew drawing=off
 }
 
 zen_off() {
@@ -23,10 +21,9 @@ zen_off() {
              --set separator drawing=on \
              --set front_app drawing=on \
              --set volume_icon drawing=on \
-             --set spotify.play updates=on \
-             --set brew drawing=on \
-             --set volume drawing=on \
-             --set github.bell drawing=on
+             --set wifi_alias drawing=on \
+             --set battery_alias drawing=on \
+             --set brew drawing=on
 }
 
 if [ "$1" = "on" ]; then
@@ -34,7 +31,7 @@ if [ "$1" = "on" ]; then
 elif [ "$1" = "off" ]; then
   zen_off
 else
-  if [ "$(sketchybar --query apple.logo | jq -r ".geometry.drawing")" = "on" ]; then
+  if [ "$(sketchybar --query front_app | jq -r ".geometry.drawing")" = "on" ]; then
     zen_on
   else
     zen_off

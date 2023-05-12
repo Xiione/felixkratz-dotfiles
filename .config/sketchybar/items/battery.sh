@@ -1,15 +1,18 @@
 #!/bin/bash
 
-battery=(
-  script="$PLUGIN_DIR/battery.sh"
-  icon.font="$FONT:Regular:19.0"
-  padding_right=5
-  padding_left=0
+ALIAS="Control Center,Battery"
+
+battery_alias=(
+  alias.color="$WHITE"
+  icon.drawing=off
   label.drawing=off
-  update_freq=120
+  padding_left=0
+  padding_right=0
+  popup.drawing=off
+  update_freq=3
   updates=on
 )
 
-sketchybar --add item battery right      \
-           --set battery "${battery[@]}" \
-           --subscribe battery power_source_change system_woke
+sketchybar --add alias "$ALIAS" right                                   \
+           --rename "$ALIAS" battery_alias                              \
+           --set battery_alias "${battery_alias[@]}"

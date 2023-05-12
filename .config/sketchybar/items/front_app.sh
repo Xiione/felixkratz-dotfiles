@@ -1,6 +1,8 @@
 #!/bin/bash
 
 front_app=(
+  icon.drawing=off
+  padding_left=0
   label.font="$FONT:Black:12.0"
   icon.background.drawing=on
   display=active
