@@ -22,7 +22,7 @@ do
     icon.highlight_color=$BLUE
     label.color=$LIGHT_GREY
     label.highlight_color=$WHITE
-    label.font="svgfont:Regular:16.0"
+    label.font="sketchybar-app-font:Regular:16.0"
     label.y_offset=-1
     background.color=$BACKGROUND_1
     background.border_color=$BACKGROUND_2
