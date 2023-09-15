@@ -1,14 +1,14 @@
 #!/bin/bash
-
 update() {
-  source "$CONFIG_DIR/colors.sh"
-  COLOR=$BACKGROUND_2
-  if [ "$SELECTED" = "true" ]; then
-    COLOR=$BLUE
-  fi
-  sketchybar --set $NAME icon.highlight=$SELECTED \
-                         label.highlight=$SELECTED \
-                         background.border_color=$COLOR
+    source "$CONFIG_DIR/colors.sh"
+    COLOR=$BACKGROUND_2
+    if [ "$SELECTED" = "true" ]; then
+        COLOR=$BLUE
+        sketchybar --set "$NAME"
+    fi
+    sketchybar --set "$NAME" icon.highlight="$SELECTED" \
+                             label.highlight="$SELECTED" \
+                             background.border_color="$COLOR"
 }
 
 set_space_label() {
@@ -35,8 +35,16 @@ mouse_clicked() {
 }
 
 case "$SENDER" in
-  "mouse.clicked") mouse_clicked
-  ;;
-  *) update
-  ;;
+    "mouse.clicked") mouse_clicked
+    ;;
+    # "space_change") 
+    #     update_prev
+    #     update
+    # ;;
+    # "front_app_switched") 
+    #     update_prev
+    #     update
+    # ;;
+    *) update
+    ;;
 esac
