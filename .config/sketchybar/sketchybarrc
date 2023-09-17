@@ -61,6 +61,9 @@ defaults=(
 
 sketchybar --default "${defaults[@]}"
 
+# Custom events
+sketchybar --add event keepass_locked
+
 # Left
 source "$ITEM_DIR/apple.sh"
 source "$ITEM_DIR/spaces.sh"
@@ -74,11 +77,12 @@ source "$ITEM_DIR/front_app.sh"
 source "$ITEM_DIR/calendar.sh"
 source "$ITEM_DIR/brew.sh"
 source "$ITEM_DIR/github.sh"
+source "$ITEM_DIR/keepass.sh"
 source "$ITEM_DIR/wifi.sh"
 source "$ITEM_DIR/battery.sh"
 source "$ITEM_DIR/volume.sh"
 source "$ITEM_DIR/cpu.sh"
-source "$ITEM_DIR/svim.sh"
+source "$ITEM_DIR/status_bracket.sh"
 
 sketchybar --hotload on
 
