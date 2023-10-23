@@ -9,7 +9,6 @@ zen_on() {
              --set front_app drawing=off \
              --set volume_icon drawing=off \
              --set wifi_alias drawing=off \
-             --set battery_alias drawing=off \
              --set brew drawing=off \
              --set github.bell drawing=off \
              --set keepass_alias drawing=off
@@ -24,10 +23,9 @@ zen_off() {
              --set front_app drawing=on \
              --set volume_icon drawing=on \
              --set wifi_alias drawing=on \
-             --set battery_alias drawing=on \
              --set brew drawing=on \
-             --set github.bell drawing=off \
-             --set keepass_alias drawing=off
+             --set github.bell drawing=on \
+             --set keepass_alias drawing=on
 }
 
 if [ "$1" = "on" ]; then
