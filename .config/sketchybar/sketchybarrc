@@ -84,6 +84,7 @@ source "$ITEM_DIR/volume.sh"
 source "$ITEM_DIR/cpu.sh"
 source "$ITEM_DIR/status_bracket.sh"
 
+
 sketchybar --hotload on
 
 # Forcing all item scripts to run (never do this outside of sketchybarrc)

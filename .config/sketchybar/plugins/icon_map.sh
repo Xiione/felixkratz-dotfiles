@@ -218,6 +218,9 @@ case "$1" in
 "Chromium" | "Google Chrome" | "Google Chrome Canary")
   icon_result=":google_chrome:"
   ;;
+"Arc")
+  icon_result=":arc:"
+  ;;
 "Xcode")
   icon_result=":xcode:"
   ;;
