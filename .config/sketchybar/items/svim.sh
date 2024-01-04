@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source "$CONFIG_DIR/icons.sh"
+
 svim=(
   script="$PLUGIN_DIR/svim.sh"
   icon=$INSERT_MODE

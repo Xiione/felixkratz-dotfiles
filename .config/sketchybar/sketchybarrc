@@ -83,7 +83,7 @@ source "$ITEM_DIR/battery.sh"
 source "$ITEM_DIR/volume.sh"
 source "$ITEM_DIR/cpu.sh"
 source "$ITEM_DIR/status_bracket.sh"
-
+source "$ITEM_DIR/svim.sh"
 
 sketchybar --hotload on
 
