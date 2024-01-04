@@ -38,19 +38,19 @@ spaces_bracket=(
   background.border_color=$BACKGROUND_2
 )
 
-# separator=(
-#   icon=􀆊
-#   icon.font="$FONT:Heavy:16.0"
-#   padding_left=10
-#   padding_right=8
-#   label.drawing=off
-#   associated_display=active
-#   click_script='yabai -m space --create && sketchybar --trigger space_change'
-#   icon.color=$WHITE
-# )
+space_creator=(
+  icon=􀆊
+  icon.font="$FONT:Heavy:16.0"
+  padding_left=10
+  padding_right=8
+  label.drawing=off
+  display=active
+  click_script='yabai -m space --create'
+  script="$PLUGIN_DIR/space_windows.sh"
+  icon.color=$WHITE
+  background.color="$CLICK"
+)
 
 sketchybar --add bracket spaces_bracket '/space\..*/'  \
            --set spaces_bracket "${spaces_bracket[@]}" \
                                                        
-           # --add item separator left                   \
-           # --set separator "${separator[@]}"

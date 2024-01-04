@@ -3,7 +3,6 @@
 ALIAS="KeePassXC,Item-0"
 
 keepass_alias=(
-  alias.color="$WHITE"
   click_script="$PLUGIN_DIR/keepass.sh"
   icon.drawing=off
   label.drawing=off

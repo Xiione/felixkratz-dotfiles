@@ -12,7 +12,7 @@ window_state() {
 
   if [ "$(echo "$WINDOW" | jq '.["is-floating"]')" = "true" ]; then
     ICON+=$YABAI_FLOAT
-    COLOR=$RED
+    COLOR=$MAGENTA
   elif [ "$(echo "$WINDOW" | jq '.["has-fullscreen-zoom"]')" = "true" ]; then
     ICON+=$YABAI_FULLSCREEN_ZOOM
     COLOR=$GREEN
@@ -23,16 +23,64 @@ window_state() {
     LAST_STACK_INDEX=$(yabai -m query --windows --window stack.last | jq '.["stack-index"]')
     ICON+=$YABAI_STACK
     LABEL="$(printf "[%s/%s]" "$STACK_INDEX" "$LAST_STACK_INDEX")"
-    COLOR=$MAGENTA
+    COLOR=$RED
   fi
 
-  args=(--bar border_color=$COLOR --animate sin 10 --set $NAME icon.color=$COLOR)
+  args=(--bar --animate sin 10 --set "$NAME" icon.color="$COLOR")
 
-  [ -z "$LABEL" ] && args+=(label.width=0) \
+  [ "$LABEL" = "" ] && args+=(label.width=0) \
                   || args+=(label="$LABEL" label.width=40)
 
-  [ -z "$ICON" ] && args+=(icon.width=0) \
+  [ "$ICON" = "" ] && args+=(icon.width=0) \
                  || args+=(icon="$ICON" icon.width=30)
+
+  sketchybar -m "${args[@]}"
+}
+
+windows_on_spaces() {
+  CURRENT_SPACES="$(yabai -m query --displays | jq -r '.[].spaces | @sh')"
+
+  args=(--set '/space\..*/' background.drawing=on
+        --animate sin 10)
+
+  while read -r line
+  do
+    for space in ${line[@]}
+    do
+      icon_strip=" "
+      raw_apps=$(yabai -m query --windows --space "$space" | jq -r ".[].app")
+      if [ "$raw_apps" != "" ]; then
+        unique_apps=$(echo "$raw_apps" | sort | uniq -i)
+        while read -r app
+        do
+          icon_strip+=" $("$CONFIG_DIR"/plugins/icon_map.sh "$app")"
+        done <<< "$unique_apps"
+      else
+        icon_strip=" —"
+      fi
+      args+=(--set space."$space" label="$icon_strip" label.drawing=on)
+    done
+  done <<< "$CURRENT_SPACES"
+
+  sketchybar -m "${args[@]}"
+}
+
+space_windows_change() {
+  args=(--animate sin 10)
+
+  space="$(echo "$INFO" | jq -r '.space')"
+  apps="$(echo "$INFO" | jq -r '.apps | keys[]')"
+
+  icon_strip=" "
+  if [ "${apps}" != "" ]; then
+  while read -r app
+  do
+    icon_strip+=" $($CONFIG_DIR/plugins/icon_map.sh "$app")"
+  done <<< "${apps}"
+  else
+    icon_strip=" —"
+  fi
+  args+=(--set space.$space label="$icon_strip")
 
   sketchybar -m "${args[@]}"
 }
@@ -46,6 +94,12 @@ mouse_clicked() {
 case "$SENDER" in
   "mouse.clicked") mouse_clicked
   ;;
-  "window_focus") window_state 
+  "forced") exit 0
+  ;;
+  "window_focus" | "float_change") window_state 
+  ;;
+  "space_change" | "space_windows_change") space_windows_change
+  ;;
+  "windows_on_spaces") windows_on_spaces
   ;;
 esac

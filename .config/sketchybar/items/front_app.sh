@@ -4,6 +4,7 @@ front_app=(
   icon.drawing=off
   padding_left=0
   label.font="$FONT:Black:12.0"
+  label.background.color="$CLICK"
   icon.background.drawing=on
   display=active
   script="$PLUGIN_DIR/front_app.sh"
