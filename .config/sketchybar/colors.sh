@@ -9,6 +9,8 @@ export WHITE=0xffD8DEE9
 export RED=0xffBF616A
 # #A3BE8C
 export GREEN=0xffA3BE8C
+# #5E81AC
+export LIGHT_BLUE=0xff5E81AC
 # #81A1C1
 export BLUE=0xff81A1C1
 # #EBCB8B
@@ -25,7 +27,9 @@ export LIGHT_GREY=0xff4C566A
 export TRANSPARENT=0x00000000
 # #000000
 export CLICK=0x0d000000
-# export CLICK=0xffffffff
+# #4C566A
+export RECENT_SPACE=0xfe4C566A
+
 
 # General bar colors
 export BAR_COLOR=$TRANSPARENT

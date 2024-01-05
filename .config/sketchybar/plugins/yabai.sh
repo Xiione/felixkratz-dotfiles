@@ -1,9 +1,10 @@
-#!/bin/bash
+#!/opt/homebrew/bin/bash
+# up-to-date ver for to-lowercase syntax
+
+source "$CONFIG_DIR/colors.sh"
+source "$CONFIG_DIR/icons.sh"
 
 window_state() {
-  source "$CONFIG_DIR/colors.sh"
-  source "$CONFIG_DIR/icons.sh"
-
   WINDOW=$(yabai -m query --windows --window)
   STACK_INDEX=$(echo "$WINDOW" | jq '.["stack-index"]')
 
@@ -49,6 +50,7 @@ windows_on_spaces() {
     do
       icon_strip=" "
       raw_apps=$(yabai -m query --windows --space "$space" | jq -r ".[].app")
+
       if [ "$raw_apps" != "" ]; then
         unique_apps=$(echo "$raw_apps" | sort | uniq -i)
         while read -r app
@@ -73,18 +75,44 @@ space_windows_change() {
 
   icon_strip=" "
   if [ "${apps}" != "" ]; then
-  while read -r app
-  do
-    icon_strip+=" $($CONFIG_DIR/plugins/icon_map.sh "$app")"
-  done <<< "${apps}"
+    while read -r app
+    do
+      icon_strip+=" $($CONFIG_DIR/plugins/icon_map.sh "$app")"
+    done <<< "${apps}"
   else
     icon_strip=" —"
   fi
-  args+=(--set space.$space label="$icon_strip")
+  args+=(--set space."$space" label="$icon_strip")
 
   sketchybar -m "${args[@]}"
 }
 
+
+space_change() {
+  CURRENT_SPACES="$(yabai -m query --displays | jq -r '.[].spaces | @sh')"
+
+  args=(--set '/space\..*/' background.drawing=on
+        --animate sin 10)
+
+  while read -r line
+  do
+    for space in ${line[@]}
+    do
+      border_color=$(sketchybar --query space."$space" | jq -r ".geometry.background.border_color")
+
+      case "${border_color,,}" in
+        "${LIGHT_GREY,,}") border_color="$GREY"
+        ;;
+        "${RECENT_SPACE,,}") border_color="$LIGHT_GREY"
+        ;;
+      esac
+
+      args+=(--set space."$space" background.border_color="$border_color")
+    done
+  done <<< "$CURRENT_SPACES"
+
+  sketchybar -m "${args[@]}"
+}
 
 mouse_clicked() {
   yabai -m window --toggle float
@@ -98,7 +126,9 @@ case "$SENDER" in
   ;;
   "window_focus" | "float_change") window_state 
   ;;
-  "space_change" | "space_windows_change") space_windows_change
+  "space_windows_change") space_windows_change
+  ;;
+  "space_change") space_change
   ;;
   "windows_on_spaces") windows_on_spaces
   ;;

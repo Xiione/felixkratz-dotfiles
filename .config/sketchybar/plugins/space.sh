@@ -5,6 +5,8 @@ update() {
   COLOR=$BACKGROUND_2
   if [ "$SELECTED" = "true" ]; then
     COLOR=$BLUE
+  else
+    COLOR=$RECENT_SPACE
   fi
   sketchybar --set $NAME icon.highlight=$SELECTED \
                          label.highlight=$SELECTED \
