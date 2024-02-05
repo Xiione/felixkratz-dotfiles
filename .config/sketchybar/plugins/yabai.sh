@@ -27,7 +27,7 @@ window_state() {
     COLOR=$RED
   fi
 
-  args=(--bar --animate sin 10 --set "$NAME" icon.color="$COLOR")
+  args=(--set "$NAME" icon.color="$COLOR")
 
   [ "$LABEL" = "" ] && args+=(label.width=0) \
                   || args+=(label="$LABEL" label.width=40)
@@ -41,8 +41,7 @@ window_state() {
 windows_on_spaces() {
   CURRENT_SPACES="$(yabai -m query --displays | jq -r '.[].spaces | @sh')"
 
-  args=(--set '/space\..*/' background.drawing=on
-        --animate sin 10)
+  args=(--animate sin 10)
 
   while read -r line
   do
@@ -91,19 +90,23 @@ space_windows_change() {
 space_change() {
   CURRENT_SPACES="$(yabai -m query --displays | jq -r '.[].spaces | @sh')"
 
-  args=(--set '/space\..*/' background.drawing=on
-        --animate sin 10)
+  CUR_SPACE="$(echo "$INFO" | jq -r '.[]')"
+
+  args=(--set '/space\..*/' background.drawing=on)
 
   while read -r line
   do
     for space in ${line[@]}
     do
+      if [ "${CUR_SPACE}" = "$space" ]; then
+        continue
+      fi
       border_color=$(sketchybar --query space."$space" | jq -r ".geometry.background.border_color")
 
       case "${border_color,,}" in
-        "${LIGHT_GREY,,}") border_color="$GREY"
+        "${RECENT_SPACE,,}") border_color="$BACKGROUND_2"
         ;;
-        "${RECENT_SPACE,,}") border_color="$LIGHT_GREY"
+        "${RECENT_SPACE_PRE,,}") border_color="$RECENT_SPACE"
         ;;
       esac
 

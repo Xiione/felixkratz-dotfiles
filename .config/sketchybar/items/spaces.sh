@@ -31,7 +31,7 @@ do
 
   sketchybar --add space space.$sid left    \
              --set space.$sid "${space[@]}" \
-             --subscribe space.$sid mouse.clicked space_change front_app_switched
+             --subscribe space.$sid mouse.clicked space_change
 done
 
 spaces_bracket=(
