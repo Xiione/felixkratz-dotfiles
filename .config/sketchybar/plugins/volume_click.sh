@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -i
 
 WIDTH=100
 
@@ -20,6 +20,7 @@ toggle_detail() {
 }
 
 toggle_devices() {
+  echo "$(which SwitchAudioSource)" >> ~/test.out
   which SwitchAudioSource >/dev/null || exit 0
   source "$CONFIG_DIR/colors.sh"
 
@@ -34,7 +35,7 @@ toggle_devices() {
     args+=(--add item volume.device.$COUNTER popup."$NAME" \
            --set volume.device.$COUNTER label="${device}" \
                                         label.color="$COLOR" \
-                 click_script="SwitchAudioSource -s \"${device}\" && sketchybar --set /volume.device\.*/ label.color=$GREY --set \$NAME label.color=$WHITE --set $NAME popup.drawing=off")
+                 click_script="/opt/homebrew/bin/SwitchAudioSource -s \"${device}\" && sketchybar --set /volume.device\.*/ label.color=$GREY --set \$NAME label.color=$WHITE --set $NAME popup.drawing=off")
     COUNTER=$((COUNTER+1))
   done <<< "$(SwitchAudioSource -a -t output)"
 

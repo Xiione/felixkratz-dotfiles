@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -i
 
 if [ "$SENDER" = "space_windows_change" ]; then
   args=(--animate sin 10)

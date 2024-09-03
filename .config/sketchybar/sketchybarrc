@@ -3,6 +3,8 @@
 source "$CONFIG_DIR/colors.sh" # Loads all defined colors
 source "$CONFIG_DIR/icons.sh" # Loads all defined icons
 
+PATH="/opt/homebrew/bin:$PATH"
+
 ITEM_DIR="$CONFIG_DIR/items" # Directory where the items are configured
 PLUGIN_DIR="$CONFIG_DIR/plugins" # Directory where all the plugin scripts are stored
 
@@ -27,8 +29,8 @@ bar=(
   shadow=off
   position=top
   sticky=on
-  padding_right=11
-  padding_left=11
+  padding_right=8
+  padding_left=8
   y_offset=0
   margin=0
   notch_width=200

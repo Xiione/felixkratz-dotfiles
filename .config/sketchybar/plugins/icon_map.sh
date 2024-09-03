@@ -317,7 +317,7 @@ case "$1" in
 "Iris")
   icon_result=":iris:"
   ;;
-"Neovide" | "MacVim" | "Vim" | "VimR")
+"Neovide" | "MacVim" | "Vim" | "VimR" | "Neogui" )
   icon_result=":vim:"
   ;;
 "Warp")

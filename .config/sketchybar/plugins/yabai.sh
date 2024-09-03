@@ -1,4 +1,4 @@
-#!/opt/homebrew/bin/bash
+#!/opt/homebrew/bin/bash -i
 # up-to-date ver for to-lowercase syntax
 
 source "$CONFIG_DIR/colors.sh"
@@ -38,6 +38,22 @@ window_state() {
   sketchybar -m "${args[@]}"
 }
 
+# depends on raw_apps, args, space
+set_icon_strips() {
+  icon_strip=" "
+
+  if [ "$raw_apps" != "" ]; then
+    unique_apps=$(echo "$raw_apps" | sort | uniq -i)
+    while read -r app
+    do
+      icon_strip+=" $("$CONFIG_DIR"/plugins/icon_map.sh "$app")"
+    done <<< "$unique_apps"
+  else
+    icon_strip=" —"
+  fi
+  args+=(--set space."$space" label="$icon_strip" label.drawing=on)
+}
+
 windows_on_spaces() {
   CURRENT_SPACES="$(yabai -m query --displays | jq -r '.[].spaces | @sh')"
 
@@ -47,19 +63,9 @@ windows_on_spaces() {
   do
     for space in ${line[@]}
     do
-      icon_strip=" "
       raw_apps=$(yabai -m query --windows --space "$space" | jq -r ".[].app")
 
-      if [ "$raw_apps" != "" ]; then
-        unique_apps=$(echo "$raw_apps" | sort | uniq -i)
-        while read -r app
-        do
-          icon_strip+=" $("$CONFIG_DIR"/plugins/icon_map.sh "$app")"
-        done <<< "$unique_apps"
-      else
-        icon_strip=" —"
-      fi
-      args+=(--set space."$space" label="$icon_strip" label.drawing=on)
+      set_icon_strips
     done
   done <<< "$CURRENT_SPACES"
 
@@ -70,18 +76,9 @@ space_windows_change() {
   args=(--animate sin 10)
 
   space="$(echo "$INFO" | jq -r '.space')"
-  apps="$(echo "$INFO" | jq -r '.apps | keys[]')"
+  raw_apps="$(echo "$INFO" | jq -r '.apps | keys[]')"
 
-  icon_strip=" "
-  if [ "${apps}" != "" ]; then
-    while read -r app
-    do
-      icon_strip+=" $($CONFIG_DIR/plugins/icon_map.sh "$app")"
-    done <<< "${apps}"
-  else
-    icon_strip=" —"
-  fi
-  args+=(--set space."$space" label="$icon_strip")
+  set_icon_strips
 
   sketchybar -m "${args[@]}"
 }

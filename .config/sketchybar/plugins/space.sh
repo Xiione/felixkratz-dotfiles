@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -i
 source "$CONFIG_DIR/colors.sh"
 
 update() {
