@@ -1,28 +1,28 @@
 #!/bin/bash
 
 # Color Palette
-# #2E3440
-export BLACK=0xff2E3440
+# #222630
+export BLACK=0xff222630
 # #D8DEE9
 export WHITE=0xffD8DEE9
 # #BF616A
 export RED=0xffBF616A
 # #A3BE8C
 export GREEN=0xffA3BE8C
-# #5E81AC
-export LIGHT_BLUE=0xff5E81AC
 # #81A1C1
-export BLUE=0xff81A1C1
+export LIGHT_BLUE=0xff81A1C1
+# #5E81AC
+export BLUE=0xff5E81AC
 # #EBCB8B
 export YELLOW=0xffEBCB8B
 # #D08770
 export ORANGE=0xffD08770
 # #B48EAD
 export MAGENTA=0xffB48EAD
+# #2E3440
+export GREY=0xff2E3440
 # #3B4252
-export GREY=0xff3B4252
-# #4C566A
-export LIGHT_GREY=0xff4C566A
+export LIGHT_GREY=0xff3B4252
 
 
 # #000000
