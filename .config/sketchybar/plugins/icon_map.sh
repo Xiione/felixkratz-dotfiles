@@ -38,7 +38,7 @@ case "$1" in
 "TIDAL")
   icon_result=":tidal:"
   ;;
-"Spotlight")
+"Spotlight" | "Nicotine+")
   icon_result=":spotlight:"
   ;;
 "Affinity Publisher")
@@ -107,7 +107,7 @@ case "$1" in
 "IntelliJ IDEA")
   icon_result=":idea:"
   ;;
-"Music" | "音乐")
+"Music" | "音乐" | "Feishin")
   icon_result=":music:"
   ;;
 "Safari" | "Safari浏览器" | "Safari Technology Preview")
